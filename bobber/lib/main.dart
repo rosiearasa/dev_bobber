@@ -1,8 +1,12 @@
+// import 'package:bobber/models/plunge.dart';
+// import 'package:bobber/screens/connect.dart';
+// import 'package:bobber/screens/home_screen.dart';
+// import 'package:bobber/screens/tabs.dart';
 import 'package:bobber/screens/connect.dart';
-import 'package:bobber/screens/home_screen.dart';
 import 'package:bobber/screens/tabs.dart';
 import 'package:bobber/theme/theme_constants.dart';
 import 'package:bobber/theme/theme_manager.dart';
+
 import 'package:flutter/material.dart';
 
 ThemeManager _themeManager = ThemeManager();
@@ -23,8 +27,8 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,
-      // home: const SplashScreen(),
-    home: const TabsScreen(),
+      home: const TabsScreen(),
+    // home: const PlungeItem(),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:bobber/widgets/plunge_item.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,20 +7,23 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //shows a list of the data collected from the user
-    Widget content = const Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('uh non ... nothing ici'),
-        ],
-      ),
-    );
+   
+
+   
+
+   
+    // Widget content = const Center(
+    //   child: Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       Text('uh non ... nothing ici'),
+    //     ],
+    //   ),
+    // );
 
     return Scaffold(
-      appBar: AppBar(
-   
-      ),
-      body: content,
+      appBar: AppBar(),
+      body: const PlungeItem(),
     );
     //cards in a column widget
   }
