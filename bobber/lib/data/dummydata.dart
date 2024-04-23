@@ -12,7 +12,7 @@ final items = List<DateTime>.generate(
           DateTime.now().day,
         ).add(Duration(days: i)));
 
-var sampleData = [
+var dummyRegistered = [
   Plunge(
       id: "p1",
       dateTimeStarted: items[0],

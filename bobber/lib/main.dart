@@ -2,7 +2,7 @@
 // import 'package:bobber/screens/connect.dart';
 // import 'package:bobber/screens/home_screen.dart';
 // import 'package:bobber/screens/tabs.dart';
-import 'package:bobber/screens/connect.dart';
+
 import 'package:bobber/screens/tabs.dart';
 import 'package:bobber/theme/theme_constants.dart';
 import 'package:bobber/theme/theme_manager.dart';
