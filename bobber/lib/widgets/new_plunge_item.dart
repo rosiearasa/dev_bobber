@@ -1,4 +1,7 @@
+
+
 import 'package:bobber/models/plunge.dart';
+import 'package:bobber/widgets/tile.dart';
 import 'package:flutter/material.dart';
 
 
@@ -21,8 +24,13 @@ class _NewPlungeState extends State<NewPlunge> {
   final _durationController = TextEditingController();
 
   DateTime? _plungeDate;
-  final _temperatureController = TextEditingController();
-  
+  late FixedExtentScrollController _tempControler;
+
+  //figure out what to do with the temp
+ @override
+  void initState() {
+_tempControler = FixedExtentScrollController();
+  }
   void _presentDatePicker() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
@@ -37,18 +45,18 @@ class _NewPlungeState extends State<NewPlunge> {
 
     //this line executes after the async await has been executed
   }
+
   @override
   Widget build(BuildContext context) {
     final keyBoardSpace = MediaQuery.of(context).viewInsets.bottom;
     return LayoutBuilder(builder: (ctx, constraints) {
-
-
       return SizedBox(
         height: double.infinity,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(16, 48, 16, keyBoardSpace + 16),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextField(
                   controller: _titleController,
@@ -60,47 +68,93 @@ class _NewPlungeState extends State<NewPlunge> {
                 const SizedBox(
                   width: 24,
                 ),
-              TextField(
-                    controller: _durationController,
-                    keyboardType: TextInputType.number,
-                    maxLength: 5,
-                    decoration: const InputDecoration(
-                      suffixText: 'Minutes',
-                      label: Text("Duration"),
-                    ),
+                TextField(
+                  controller: _durationController,
+                  keyboardType: TextInputType.number,
+                  maxLength: 5,
+                  decoration: const InputDecoration(
+                    suffixText: 'Minutes',
+                    label: Text("Duration"),
                   ),
-            TextField(
-                    controller: _temperatureController,
-                    keyboardType: const TextInputType.numberWithOptions(signed: true,),
-                    maxLength: 5,
-                    decoration: const InputDecoration(
-                      // TODO MAKE THIS ENUM FOR DROPDOWN TO SELECT
-                      suffixText: 'C/F',
-                      label: Text("Temperature"),
-                    ),
-                  ),
-       
+                ),
                 const SizedBox(width: 24),
-                const SizedBox(width: 24),
-              Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            _plungeDate == null
-                                ? 'No Date Selected'
-                                : formatter.format(_plungeDate!),
-                          ),
-                          IconButton(
-                            onPressed: _presentDatePicker,
-                            icon: const Icon(Icons.calendar_month),
-                          ),
-                        ],
-                      ),
+ const   Text(
+              "Set Temperature",
+        style: TextStyle (fontSize: 24), ),
+            
+                Row(
 
-                       Row(
+                
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+              
+                    SizedBox(
+                      
+                      height: 100,
+                      width: 80,
+                      
+                      child: ListWheelScrollView.useDelegate(
+                        controller:_tempControler ,
+                        perspective: 0.005,
+                        diameterRatio: 1.2,
+                        physics: const FixedExtentScrollPhysics(),
+                        itemExtent: 50,
+                        childDelegate: ListWheelChildBuilderDelegate(
+                            childCount: 10,
+                            builder: (context, index) {
+                              return  BobberTileTemp(temps: -index,
+
+                              );
+                            }),
+                      ),
+                    ),
+            const SizedBox(width: 60),
+                           SizedBox(
+                            
+                      
+                      height: 160,
+                      width: 150,
+                      
+                      
+                      child: ListWheelScrollView.useDelegate(
+                          perspective: 0.005,
+                        diameterRatio: 1.2,
+                        physics: const FixedExtentScrollPhysics(),
+                        itemExtent: 50,
+                        childDelegate: ListWheelChildBuilderDelegate(
+                            childCount: 1,
+                            builder: (context, index) {
+                              return const  BobberTileTempLabel(optionsTemp: 'Celcius',
+
+                              );
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(width: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      _plungeDate == null
+                          ? 'No Date Selected'
+                          : formatter.format(_plungeDate!),
+                    ),
+                    IconButton(
+                      onPressed: _presentDatePicker,
+                      icon: const Icon(Icons.calendar_month),
+                    ),
+                  ],
+                ),
+                 const SizedBox(width: 40),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Row(
                     children: [
-                      const Spacer(),
+                                 
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
@@ -113,9 +167,8 @@ class _NewPlungeState extends State<NewPlunge> {
                         child: const Text("Save Plunge"),
                       ),
                     ],
-                  )
-             
-
+                  ),
+                )
               ],
             ),
           ),

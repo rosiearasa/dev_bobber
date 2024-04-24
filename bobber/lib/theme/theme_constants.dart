@@ -28,9 +28,9 @@ ThemeData lightTheme = ThemeData(
       backgroundColor: MaterialStateProperty.all<Color>(COLOR_LIFESAVING),
     ),
   ),
-  textTheme: const TextTheme(
-    headline2: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-  ),
+  textTheme:Typography.blackMountainView,
+
+
 
   scaffoldBackgroundColor: COLOR_MOONLIGHT,
 );
