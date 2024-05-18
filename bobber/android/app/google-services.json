@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "363029964981",
+    "project_id": "bobber-e8a46",
+    "storage_bucket": "bobber-e8a46.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363029964981:android:dc65b3738abd8d8e1636fc",
+        "android_client_info": {
+          "package_name": "com.example.bobber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATeg5j3vEYbxlZH_IItr8j0TDyQFnjSoU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

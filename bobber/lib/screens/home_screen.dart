@@ -6,21 +6,7 @@ class HomeScreen extends StatelessWidget {
   final String title = 'Home';
   @override
   Widget build(BuildContext context) {
-    //shows a list of the data collected from the user
-   
-
-   
-
-   
-    // Widget content = const Center(
-    //   child: Column(
-    //     mainAxisSize: MainAxisSize.min,
-    //     children: [
-    //       Text('uh non ... nothing ici'),
-    //     ],
-    //   ),
-    // );
-
+ 
     return Scaffold(
       appBar: AppBar(),
       body: const PlungeItem(),

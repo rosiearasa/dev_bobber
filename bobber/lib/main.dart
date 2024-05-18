@@ -2,6 +2,8 @@
 // import 'package:bobber/screens/connect.dart';
 // import 'package:bobber/screens/home_screen.dart';
 // import 'package:bobber/screens/tabs.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'package:bobber/screens/tabs.dart';
 import 'package:bobber/theme/theme_constants.dart';
@@ -9,8 +11,14 @@ import 'package:bobber/theme/theme_manager.dart';
 
 import 'package:flutter/material.dart';
 
+
 ThemeManager _themeManager = ThemeManager();
-void main() {
+void main () async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 
