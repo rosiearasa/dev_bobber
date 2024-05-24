@@ -26,7 +26,7 @@ class _PlungeState extends State<AddPlunge> {
 
   void _addPlunge(Plunge plunge) {
     setState(() {
-      dummyRegistered.add(plunge);
+      plungeItems.add(plunge);
     });
   }
 

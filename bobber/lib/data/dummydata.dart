@@ -12,8 +12,9 @@ final items = List<DateTime>.generate(
           DateTime.now().day,
         ).add(Duration(days: i)));
 
-var dummyRegistered = [
+var plungeItems = [
   Plunge(
+    
       id: "p1",
       dateTimeStarted: items[0],
       dateTimeCompleted: items[0].add(const Duration(minutes: 10)),
