@@ -1,6 +1,4 @@
 //a screen to manually add the plunge data.
-
-
 import 'package:bobber/data/dummydata.dart';
 import 'package:bobber/models/plunge.dart';
 import 'package:bobber/widgets/new_plunge_item.dart';
@@ -21,7 +19,7 @@ class _PlungeState extends State<AddPlunge> {
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
-        builder: (ctx) => NewPlunge(onAddPlunge: _addPlunge));
+        builder: (ctx) =>const  NewPlunge());
   }
 
   void _addPlunge(Plunge plunge) {
@@ -34,19 +32,19 @@ class _PlungeState extends State<AddPlunge> {
   Widget build(BuildContext context) {
     //shows a list of the data collected from the user
 
-    Widget content =  Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-              onPressed: _openAddPlungeOverlay, icon: const Icon(Icons.add))
-        ],
-      ),
-    );
+    // Widget content =  Center(
+    //   child: Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       IconButton(
+    //           onPressed: _openAddPlungeOverlay, icon: const Icon(Icons.add))
+    //     ],
+    //   ),
+    // );
 
     return Scaffold(
       appBar: AppBar(),
-      body: content,
+      body: const NewPlunge()
     );
     //cards in a column widget
   }

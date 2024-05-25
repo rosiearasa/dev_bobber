@@ -31,10 +31,7 @@ class _TabsScreenState extends State<TabsScreen> {
       activePage = const SplashScreen();
       activePageTitle = 'Connect Bobber';
     }
-        if (_selectedPageIndex == 2) {
-      activePage = const AddPlunge();
-      activePageTitle = 'Add Data Manually';
-    }
+
 
     return Scaffold(
       appBar: AppBar(title: Text(activePageTitle),
@@ -46,7 +43,7 @@ bottomNavigationBar: BottomNavigationBar(
   items: const [
   BottomNavigationBarItem(icon: Icon(Icons.troubleshoot_sharp),label: 'Connect'),
   BottomNavigationBarItem(icon: Icon(Icons.home_filled),label: 'Home'),
-   BottomNavigationBarItem(icon: Icon(Icons.add),label: 'Add Data'),
+
 ],),
     );
   }

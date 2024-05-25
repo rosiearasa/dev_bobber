@@ -1,4 +1,4 @@
-import 'package:bobber/widgets/plunge_item.dart';
+
 import 'package:bobber/widgets/plunge_list.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +8,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
  
-    return Scaffold(
-      appBar: AppBar(),
+    return const Scaffold(
+      // appBar: AppBar(),
       // body: const PlungeItem(),
-      body: const PlungeList()
+      body:  PlungeList()
     );
     //cards in a column widget
   }
