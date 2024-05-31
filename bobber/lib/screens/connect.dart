@@ -1,11 +1,8 @@
-
+import 'package:bobber/services/flutter_reactive_ble.dart';
 import 'package:flutter/material.dart';
-
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -16,8 +13,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: const Text("connect"),
-      ),
+          // title: const Text("connect"),
+          ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,11 +24,14 @@ class _SplashScreenState extends State<SplashScreen> {
             height: 500,
             width: 500,
           ),
-     
           Center(
             child: ElevatedButton(
               onPressed: (() {
-                print("GO TO STATEFUL WIDGET");
+                if (Navigator.canPop(context)) {
+            Navigator.pop(context, true);
+         }
+         Navigator.push(context, 
+             MaterialPageRoute(builder: (context) => const ReactiveDevice()));
               }),
               child: const Text("Connect"),
             ),
