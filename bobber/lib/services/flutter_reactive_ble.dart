@@ -7,7 +7,7 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 // import 'package:permission_handler/permission_handler.dart';
 import 'package:location_permissions/location_permissions.dart';
 
-List<Uuid> servicesList = [];
+List<Uuid> servicesList = [Uuid.parse('4fafc201-1fb5-459e-8fcc-c5c9c331914b')];
 
 // Uuid _UART_UUID = Uuid.parse("");
 // Uuid _UART_RX = Uuid.parse("");
