@@ -1,9 +1,10 @@
-import 'package:bobber/screens/add_plunge.dart';
+
+import 'package:bobber/widgets/new_plunge_item.dart';
 
 import 'package:flutter/material.dart';
 import 'package:bobber/data/dummydata.dart';
 
-class PlungeList extends StatefulWidget{
+class PlungeList extends StatefulWidget {
   const PlungeList({super.key});
 
   @override
@@ -11,30 +12,19 @@ class PlungeList extends StatefulWidget{
 }
 
 class _PlungeListState extends State<PlungeList> {
-void _addItem(){
-  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const AddPlunge()
-  ));
-
-}
+  void _addItem() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (ctx) => const NewPlunge()));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
         title: const Text('Plunges'),
-        actions: [
-          
-          IconButton(
-            
-            onPressed:_addItem, icon: const Icon(Icons.add))
-        ],
+        actions: [IconButton(onPressed: _addItem, icon: const Icon(Icons.add))],
       ),
-      body: 
-      
-   
-
-      ListView.builder(
+      body: ListView.builder(
           itemCount: plungeItems.length,
           itemBuilder: (ctx, index) => SizedBox(
               height: 200,
@@ -46,7 +36,10 @@ void _addItem(){
                 clipBehavior: Clip.hardEdge,
                 elevation: 3,
                 child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                     
+                     
+                    },
                     child: Stack(
                       children: [
                         Positioned(

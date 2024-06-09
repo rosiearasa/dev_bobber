@@ -1,8 +1,8 @@
-import 'dart:ffi';
-
+import 'package:bobber/controllers/savedata_controller.dart';
 import 'package:bobber/models/plunge.dart';
 import 'package:bobber/widgets/tile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NewPlunge extends StatefulWidget {
   const NewPlunge({super.key});
@@ -20,12 +20,13 @@ class _NewPlungeState extends State<NewPlunge> {
 
   final _durationController = TextEditingController();
 
-  DateTime? _plungeDate;
+  late var _plungeDate = DateTime.now();
   late FixedExtentScrollController _tempControler;
 
   //figure out what to do with the temp
   @override
   void initState() {
+    super.initState();
     _tempControler = FixedExtentScrollController();
   }
 
@@ -37,18 +38,22 @@ class _NewPlungeState extends State<NewPlunge> {
         initialDate: DateTime.now(),
         firstDate: firstDate,
         lastDate: now);
-    setState(() {
-      _plungeDate = pickedDate;
-    });
+
+    if (pickedDate != null) {
+      setState(() {
+        _plungeDate = pickedDate;
+      });
+    }
 
     //this line executes after the async await has been executed
   }
 
   final _formKey = GlobalKey<FormState>();
-  void _saveItem() {
-    _formKey.currentState!.validate();
-    _formKey.currentState!.save();
-  }
+
+  // void _saveItem() {
+
+  //   _formKey.currentState!.save();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +100,7 @@ class _NewPlungeState extends State<NewPlunge> {
                           label: Text("Duration"),
                         ),
                         validator: (value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              int.tryParse(value) == null) {
+                          if (value == null || value.isEmpty) {
                             return "Must be a valid temperature";
                           }
                         },
@@ -158,7 +161,7 @@ class _NewPlungeState extends State<NewPlunge> {
                             Text(
                               _plungeDate == null
                                   ? 'No Date Selected'
-                                  : formatter.format(_plungeDate!),
+                                  : formatter.format(_plungeDate),
                             ),
                             IconButton(
                               onPressed: _presentDatePicker,
@@ -178,6 +181,7 @@ class _NewPlungeState extends State<NewPlunge> {
                               child: TextButton(
                                 onPressed: () {
                                   _formKey.currentState!.reset();
+                                  Navigator.pop(context);
                                 },
                                 child: const Text("Cancel"),
                               ),
@@ -185,7 +189,26 @@ class _NewPlungeState extends State<NewPlunge> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ElevatedButton(
-                                onPressed: _saveItem,
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    final plunge = Plunge(
+                                      dateTimeStarted: _plungeDate,
+                                      dateTimeCompleted: _plungeDate,
+                                      duration: int.parse(
+                                          _durationController.text.toString(),
+                                          radix: 10),
+                                      temperature: int.parse(
+                                          _tempControler.selectedItem
+                                              .toString(),
+                                          radix: 10),
+                                    );
+
+                                    Get.lazyPut(() => SaveDataController
+                                        .instance
+                                        .createPlunge(plunge));
+                                  }
+                                  _formKey.currentState!.save();
+                                },
                                 child: const Text("Add Plunge"),
                               ),
                             ),

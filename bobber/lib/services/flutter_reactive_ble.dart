@@ -7,16 +7,18 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 // import 'package:permission_handler/permission_handler.dart';
 import 'package:location_permissions/location_permissions.dart';
 
-Uuid _UART_UUID = Uuid.parse("");
-Uuid _UART_RX = Uuid.parse("");
-Uuid _UART_TX = Uuid.parse("");
+List<Uuid> servicesList = [];
+
+// Uuid _UART_UUID = Uuid.parse("");
+// Uuid _UART_RX = Uuid.parse("");
+// Uuid _UART_TX = Uuid.parse("");
 
 class ReactiveDevice extends StatefulWidget {
   const ReactiveDevice({super.key});
 
   @override
   State<ReactiveDevice> createState() => _ReactiveDeviceState();
-} 
+}
 
 class _ReactiveDeviceState extends State<ReactiveDevice> {
   final flutterReactiveBle = FlutterReactiveBle();
@@ -27,7 +29,7 @@ class _ReactiveDeviceState extends State<ReactiveDevice> {
   late QualifiedCharacteristic _txCharacteristic;
   late QualifiedCharacteristic _rxCharacteristic;
   late Stream<List<int>> _receivedDataStream;
-   late TextEditingController _dataToSendText;
+  late TextEditingController _dataToSendText;
   late bool _scanning = false;
   late bool _connected = false;
   late String _logTexts = "";
@@ -100,7 +102,8 @@ class _ReactiveDeviceState extends State<ReactiveDevice> {
       _scanning = true;
       refreshScreen();
       _scanStream = flutterReactiveBle
-          .scanForDevices(withServices: [_UART_UUID]).listen((device) {
+          .scanForDevices(withServices: servicesList)
+          .listen((device) {
         if (_foundBleUARTDevices.every((element) => element.id != device.id)) {
           _foundBleUARTDevices.add(device);
           refreshScreen();
@@ -116,10 +119,12 @@ class _ReactiveDeviceState extends State<ReactiveDevice> {
 
   void onConnectDevice(index) {
     _currentConnectionStream = flutterReactiveBle.connectToAdvertisingDevice(
-      id: _foundBleUARTDevices[index].id,
-      prescanDuration: Duration(seconds: 1),
-      withServices: [_UART_UUID, _UART_RX, _UART_TX],
-    );
+        id: _foundBleUARTDevices[index].id,
+        prescanDuration:const Duration(seconds: 10),
+       connectionTimeout: const Duration(seconds: 10),
+        withServices: servicesList
+        // withServices: [_UART_UUID, _UART_RX, _UART_TX],
+        ) ;
     _logTexts = "";
     refreshScreen();
     _connection = _currentConnectionStream.listen((event) {
@@ -137,8 +142,8 @@ class _ReactiveDeviceState extends State<ReactiveDevice> {
 
             _receivedData = [];
             _txCharacteristic = QualifiedCharacteristic(
-                serviceId: _UART_UUID,
-                characteristicId: _UART_TX,
+                serviceId: servicesList[0],
+                characteristicId: servicesList[0],
                 deviceId: event.deviceId);
             _receivedDataStream =
                 flutterReactiveBle.subscribeToCharacteristic(_txCharacteristic);
@@ -148,8 +153,8 @@ class _ReactiveDeviceState extends State<ReactiveDevice> {
               _logTexts = "${_logTexts}Error:$error$id\n";
             });
             _rxCharacteristic = QualifiedCharacteristic(
-                serviceId: _UART_UUID,
-                characteristicId: _UART_RX,
+                serviceId: servicesList[0],
+                characteristicId: servicesList[0],
                 deviceId: event.deviceId);
             break;
           }
@@ -171,7 +176,7 @@ class _ReactiveDeviceState extends State<ReactiveDevice> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text("Devices Scan"),
         ),
@@ -257,8 +262,6 @@ class _ReactiveDeviceState extends State<ReactiveDevice> {
                   ]))
             ],
           ),
-
-          
         ),
         persistentFooterButtons: [
           SizedBox(
@@ -296,7 +299,5 @@ class _ReactiveDeviceState extends State<ReactiveDevice> {
                 color: _connected ? Colors.blue : Colors.grey,
               ))
         ],
-
-
       );
 }

@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '363029964981',
     projectId: 'bobber-e8a46',
     storageBucket: 'bobber-e8a46.appspot.com',
-    iosBundleId: 'com.example.bobber',
+    iosBundleId: 'com.example.bobberv1',
   );
+
 }
