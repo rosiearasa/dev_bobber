@@ -77,8 +77,9 @@ class _PlungeListState extends State<PlungeList> {
                                       title: Row(
                                         children: [
                                           Text(
-                                           formatter.format( data['dateTimeCompleted'].toDate()),
-                                            maxLines: 1,
+                                           "Plunge on ${ 
+                                           formatter.format( data['dateTimeCompleted'].toDate())}",
+                                            maxLines: 2,
                                             textAlign: TextAlign.left,
                                             softWrap: true,
                                             style: const TextStyle(
@@ -97,7 +98,7 @@ class _PlungeListState extends State<PlungeList> {
                                             Icons.severe_cold_rounded,
                                             color: Colors.lightBlue,
                                           ),
-                                          Text(formatter.format( data['dateTimeStarted'].toDate())),
+                                          Text("-${data['temperature'].toString()}"),
                                         ],
                                       ),
                                       trailing: Text(
