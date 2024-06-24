@@ -1,6 +1,9 @@
-import 'package:bobber/controllers/savedata_controller.dart';
+
+import 'package:bobber/controllers/plunge_controller.dart';
 import 'package:bobber/models/plunge.dart';
+
 import 'package:bobber/widgets/tile.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,8 +18,6 @@ class NewPlunge extends StatefulWidget {
 
 class _NewPlungeState extends State<NewPlunge> {
 //always delete with dispose
-
-  final _titleController = TextEditingController();
 
   final _durationController = TextEditingController();
 
@@ -73,21 +74,6 @@ class _NewPlungeState extends State<NewPlunge> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextFormField(
-                        controller: _titleController,
-                        maxLength: 50,
-                        decoration: const InputDecoration(
-                          label: Text('Plunge Title'),
-                        ),
-                        validator: (value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              value.trim().length <= 1 ||
-                              value.trim().length > 50) {
-                            return "Error";
-                          }
-                        },
-                      ),
                       const SizedBox(
                         width: 24,
                       ),
@@ -189,7 +175,7 @@ class _NewPlungeState extends State<NewPlunge> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
                                     final plunge = Plunge(
                                       dateTimeStarted: _plungeDate,
@@ -203,9 +189,13 @@ class _NewPlungeState extends State<NewPlunge> {
                                           radix: 10),
                                     );
 
-                                    Get.lazyPut(() => SaveDataController
-                                        .instance
-                                        .createPlunge(plunge));
+                                    PlungeController().createPlunge(plunge);
+                                    Get.snackbar('Success',
+                                        'Added Data to Firestore Successfully');
+                                        
+                                              _formKey.currentState!.reset();
+                                  Navigator.pop(context);
+
                                   }
                                   _formKey.currentState!.save();
                                 },

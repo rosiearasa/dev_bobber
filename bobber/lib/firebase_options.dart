@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,20 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyATeg5j3vEYbxlZH_IItr8j0TDyQFnjSoU',
-    appId: '1:363029964981:android:dc65b3738abd8d8e1636fc',
-    messagingSenderId: '363029964981',
-    projectId: 'bobber-e8a46',
-    storageBucket: 'bobber-e8a46.appspot.com',
+    apiKey: 'AIzaSyBhrvrD6LMwdJ3jilzrWzVaUgnR8psDP-s',
+    appId: '1:160286330117:android:9f31b7813744265c0abb6c',
+    messagingSenderId: '160286330117',
+    projectId: 'bobberv1-ec028',
+    storageBucket: 'bobberv1-ec028.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDPhSPhU1OColXAg8XyJsjhX-0Ao-MRqj4',
-    appId: '1:363029964981:ios:d8a6511a87fb15701636fc',
-    messagingSenderId: '363029964981',
-    projectId: 'bobber-e8a46',
-    storageBucket: 'bobber-e8a46.appspot.com',
+    apiKey: 'AIzaSyBmQB6EgvIH10RNWpa0iVPQIbc4uiOLyOY',
+    appId: '1:160286330117:ios:86b87587684cec4a0abb6c',
+    messagingSenderId: '160286330117',
+    projectId: 'bobberv1-ec028',
+    storageBucket: 'bobberv1-ec028.appspot.com',
     iosBundleId: 'com.example.bobberv1',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCOnk6NV7yufLOOmL1xIIEhPr6I8SX72Wo',
+    appId: '1:160286330117:web:a5fbc696bde5e7fc0abb6c',
+    messagingSenderId: '160286330117',
+    projectId: 'bobberv1-ec028',
+    authDomain: 'bobberv1-ec028.firebaseapp.com',
+    storageBucket: 'bobberv1-ec028.appspot.com',
+    measurementId: 'G-2GEHF64DGC',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBmQB6EgvIH10RNWpa0iVPQIbc4uiOLyOY',
+    appId: '1:160286330117:ios:f0d8793d697597860abb6c',
+    messagingSenderId: '160286330117',
+    projectId: 'bobberv1-ec028',
+    storageBucket: 'bobberv1-ec028.appspot.com',
+    iosBundleId: 'com.example.bobber',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCOnk6NV7yufLOOmL1xIIEhPr6I8SX72Wo',
+    appId: '1:160286330117:web:55804083cfd232980abb6c',
+    messagingSenderId: '160286330117',
+    projectId: 'bobberv1-ec028',
+    authDomain: 'bobberv1-ec028.firebaseapp.com',
+    storageBucket: 'bobberv1-ec028.appspot.com',
+    measurementId: 'G-ZH24M3YFPD',
   );
 
 }

@@ -1,4 +1,4 @@
-import 'package:bobber/screens/add_plunge.dart';
+
 import 'package:bobber/screens/connect.dart';
 import 'package:bobber/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +23,12 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = const HomeScreen();
+    Widget activePage =  HomeScreen();
 
     var activePageTitle = 'Home';
 
     if (_selectedPageIndex == 0) {
-      activePage = const SplashScreen();
+      activePage =  const ReactiveDevice();
       activePageTitle = 'Connect Bobber';
     }
 
