@@ -1,3 +1,4 @@
+import 'dart:ffi';
 
 import 'package:bobber/controllers/plunge_controller.dart';
 import 'package:bobber/models/plunge.dart';
@@ -22,13 +23,15 @@ class _NewPlungeState extends State<NewPlunge> {
   final _durationController = TextEditingController();
 
   late var _plungeDate = DateTime.now();
-  late FixedExtentScrollController _tempControler;
+  late FixedExtentScrollController _tempControllerOnes;
+  late FixedExtentScrollController _tempControllerTenths;
 
   //figure out what to do with the temp
   @override
   void initState() {
     super.initState();
-    _tempControler = FixedExtentScrollController();
+    _tempControllerOnes = FixedExtentScrollController();
+    _tempControllerTenths = FixedExtentScrollController();
   }
 
   void _presentDatePicker() async {
@@ -50,11 +53,6 @@ class _NewPlungeState extends State<NewPlunge> {
   }
 
   final _formKey = GlobalKey<FormState>();
-
-  // void _saveItem() {
-
-  //   _formKey.currentState!.save();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +101,26 @@ class _NewPlungeState extends State<NewPlunge> {
                             height: 100,
                             width: 80,
                             child: ListWheelScrollView.useDelegate(
-                              controller: _tempControler,
+                              controller: _tempControllerOnes,
+                              perspective: 0.005,
+                              diameterRatio: 1.2,
+                              physics: const FixedExtentScrollPhysics(),
+                              itemExtent: 50,
+                              childDelegate: ListWheelChildBuilderDelegate(
+                                  childCount: 17,
+                                  builder: (context, index) {
+                                    return BobberTileTemp(
+                                      temps: index - 1,
+                                    );
+                                  }),
+                            ),
+                          ),
+                          const BobberTileTempLabel(optionsTemp: '.'),
+                          SizedBox(
+                            height: 100,
+                            width: 80,
+                            child: ListWheelScrollView.useDelegate(
+                              controller: _tempControllerTenths,
                               perspective: 0.005,
                               diameterRatio: 1.2,
                               physics: const FixedExtentScrollPhysics(),
@@ -112,29 +129,13 @@ class _NewPlungeState extends State<NewPlunge> {
                                   childCount: 10,
                                   builder: (context, index) {
                                     return BobberTileTemp(
-                                      temps: -index,
+                                      temps: index,
                                     );
                                   }),
                             ),
                           ),
-                          const SizedBox(width: 60),
-                          SizedBox(
-                            height: 160,
-                            width: 150,
-                            child: ListWheelScrollView.useDelegate(
-                              perspective: 0.005,
-                              diameterRatio: 1.2,
-                              physics: const FixedExtentScrollPhysics(),
-                              itemExtent: 50,
-                              childDelegate: ListWheelChildBuilderDelegate(
-                                  childCount: 1,
-                                  builder: (context, index) {
-                                    return const BobberTileTempLabel(
-                                      optionsTemp: 'Celcius',
-                                    );
-                                  }),
-                            ),
-                          ),
+                          const SizedBox(width: 20),
+                          const BobberTileTempLabel(optionsTemp: 'CELCIUS')
                         ],
                       ),
                       const SizedBox(width: 24),
@@ -183,19 +184,20 @@ class _NewPlungeState extends State<NewPlunge> {
                                       duration: int.parse(
                                           _durationController.text.toString(),
                                           radix: 10),
-                                      temperature: int.parse(
-                                          _tempControler.selectedItem
-                                              .toString(),
-                                          radix: 10),
+                                      temperature: 
+                                      double.parse(
+                                      "${_tempControllerOnes.selectedItem - 1}.${_tempControllerTenths.selectedItem}"),
+                                                
+                                                 
                                     );
+
 
                                     PlungeController().createPlunge(plunge);
                                     Get.snackbar('Success',
                                         'Added Data to Firestore Successfully');
-                                        
-                                              _formKey.currentState!.reset();
-                                  Navigator.pop(context);
 
+                                    _formKey.currentState!.reset();
+                                    Navigator.pop(context);
                                   }
                                   _formKey.currentState!.save();
                                 },

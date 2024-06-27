@@ -11,7 +11,6 @@ class PlungeController extends GetxController {
 
   var isLoading = true.obs;
 
-
   @override
   void onInit() {
     super.onInit();
@@ -21,12 +20,13 @@ class PlungeController extends GetxController {
   Future<void> getData() async {
     isLoading(true);
 
-    
-
     try {
-      QuerySnapshot plunges = await  FirebaseFirestore.instance.collection('plungetest').orderBy('id').get();
+      QuerySnapshot plunges = await FirebaseFirestore.instance
+          .collection('plungetest')
+          .orderBy('id')
+          .get();
       plungesList.clear();
-      for (var plunge in plunges.docs ) {
+      for (var plunge in plunges.docs) {
         plungesList.add(Plunge(
             dateTimeStarted: plunge['dateTimeStarted'].toDate(),
             dateTimeCompleted: plunge['dateTimeCompleted'].toDate(),
@@ -42,7 +42,7 @@ class PlungeController extends GetxController {
 
   Future<void> createPlunge(Plunge plunge) async {
     try {
-      await  FirebaseFirestore.instance.collection('plungetest').doc().set({
+      await FirebaseFirestore.instance.collection('plungetest').doc().set({
         'dateTimeCompleted': plunge.dateTimeCompleted,
         'dateTimeStarted': plunge.dateTimeStarted,
         'duration': plunge.duration,
@@ -50,6 +50,20 @@ class PlungeController extends GetxController {
       });
     } catch (e) {
       Get.snackbar('Error', e.toString());
+    }
+  }
+
+  Future<void> deletePlunge(String docRef) async {
+   
+
+    FirebaseFirestore.instance
+        .collection('plungetest')
+        .doc(docRef)
+        .delete()
+        .then((doc) => Get.snackbar('Success', "Delete Successful"));
+
+    try {} catch (e) {
+      Get.snackbar("Error", e.toString());
     }
   }
 }

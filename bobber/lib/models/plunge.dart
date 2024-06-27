@@ -1,11 +1,13 @@
 
+import 'dart:ffi';
+
 import 'package:intl/intl.dart';
 
 final formatter = DateFormat.yMd();
 
 class Plunge {
   Plunge({
-    this.id,
+     this.id,
     required this.dateTimeStarted,
     required this.dateTimeCompleted,
     required this.duration,
@@ -16,7 +18,7 @@ class Plunge {
   final DateTime dateTimeStarted;
   final DateTime dateTimeCompleted;
   final int duration;
-  final int temperature;
+  final double temperature;
 
   String get FormattedDate {
     return formatter.format(dateTimeStarted);

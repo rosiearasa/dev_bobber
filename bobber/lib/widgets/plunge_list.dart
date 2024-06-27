@@ -1,14 +1,10 @@
-
+import 'package:bobber/controllers/plunge_controller.dart';
 import 'package:bobber/models/plunge.dart';
 import 'package:bobber/widgets/new_plunge_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
-
-
-
-
-
+import 'package:get/get.dart';
 
 class PlungeList extends StatefulWidget {
   const PlungeList({super.key});
@@ -28,7 +24,9 @@ class _PlungeListState extends State<PlungeList> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [IconButton(onPressed: _addItem, icon: const Icon(Icons.add))],
       ),
@@ -55,6 +53,10 @@ class _PlungeListState extends State<PlungeList> {
                       .map((DocumentSnapshot document) {
                         Map<String, dynamic> data =
                             document.data()! as Map<String, dynamic>;
+                            
+
+                    
+                   
                         return SizedBox(
                           height: 200,
                           width: 400,
@@ -65,9 +67,8 @@ class _PlungeListState extends State<PlungeList> {
                             clipBehavior: Clip.hardEdge,
                             elevation: 3,
                             child: InkWell(
-                              onTap: () {},
-                              child: 
-                              Stack(
+                           
+                              child: Stack(
                                 children: [
                                   Positioned(
                                     top: 20,
@@ -77,8 +78,7 @@ class _PlungeListState extends State<PlungeList> {
                                       title: Row(
                                         children: [
                                           Text(
-                                           "Plunge on ${ 
-                                           formatter.format( data['dateTimeCompleted'].toDate())}",
+                                            "Plunge on ${formatter.format(data['dateTimeCompleted'].toDate())}",
                                             maxLines: 2,
                                             textAlign: TextAlign.left,
                                             softWrap: true,
@@ -92,17 +92,32 @@ class _PlungeListState extends State<PlungeList> {
                                         ],
                                       ),
                                       leading: Column(
-                                        
                                         children: [
                                           const Icon(
                                             Icons.severe_cold_rounded,
                                             color: Colors.lightBlue,
                                           ),
-                                          Text("-${data['temperature'].toString()}"),
+                                          Text(
+                                              data['temperature'].toString()),
                                         ],
                                       ),
-                                      trailing: Text(
-                                          "${data['duration'].toString()} min"),
+                                      trailing: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                              "${data['duration'].toString()} min"),
+                                          const Spacer(),
+                                          GestureDetector(
+                                            onTap: () {
+                                              PlungeController()
+                                                  .deletePlunge(document.reference.id);
+                                            },
+                                            child: const Icon(Icons.delete,
+                                                color: Colors.orangeAccent),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
